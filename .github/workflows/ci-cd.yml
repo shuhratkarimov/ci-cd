@@ -1,0 +1,26 @@
+name: Docker CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Kodni olish
+        uses: actions/checkout@v3
+
+      - name: Docker image build
+        run: docker build -t my-app:latest .
+
+      - name: Eskisini toxtatish
+        run: |
+          docker stop my-app || true
+          docker rm my-app || true
+
+      - name: Yangi konteynerni ishga tushirish
+        run: |
+          docker run -d --name my-app -p 3000:3000 ci-cd-project:latest
