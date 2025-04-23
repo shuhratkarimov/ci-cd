@@ -18,8 +18,10 @@ jobs:
 
       - name: Eskisini toxtatish
         run: |
-          docker stop my-app || true
-          docker rm my-app || true
+          docker stop my-app
+          docker rm my-app
+        shell: pwsh
+        continue-on-error: true
 
       - name: Yangi konteynerni ishga tushirish
         run: |
